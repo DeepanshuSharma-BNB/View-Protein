@@ -1,0 +1,19 @@
+{
+  "name": "View Protein · Molecular Explorer",
+  "short_name": "View Protein",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#020711",
+  "theme_color": "#020711",
+  "description": "3D molecular viewer for Meta Ray-Ban Display, controlled with Neural Band wrist motion.",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

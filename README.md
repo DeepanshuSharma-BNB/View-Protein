@@ -50,3 +50,14 @@ Credit the [RCSB Protein Data Bank](https://www.rcsb.org/) for molecular structu
 ## Developer workflow
 
 Source files are public in this repository. Run `npm run check` and `npm test`. The GitHub Actions workflow builds, verifies and deploys to GitHub Pages automatically when changes land on `main`.
+
+
+## App icon and reinstallation
+
+The web app serves the existing View Protein molecular icon as `icon.svg` and generated PNG images (`icon-64.png`, `icon-192.png`, `icon-512.png`). The page exposes icon/manifest metadata and preserves the same canonical URL across releases.
+
+**One-tap recovery link:** https://deepanshusharma-bnb.github.io/View-Protein/install.html
+
+If the Meta AI phone app removes its Web Apps registration, bookmark that recovery page on the phone and tap **Add to Meta AI**, or register the URL manually via **App connections → Web apps → Add a web app**.
+
+**Important:** The Meta AI app and glasses control which web apps stay registered. There is no supported website or PWA metadata API that lets View Protein force its registration to persist. Icons and an unchanging URL can improve discoverability and make reinstalls consistent, but cannot fix a Meta-side registration bug. The artwork is provided in compatible web formats; the Meta AI launcher may still choose its own app tile/icon. Check Developer Mode and device/app updates if registrations disappear; report repeated removals to Meta with app and glasses firmware versions.

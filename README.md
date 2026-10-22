@@ -24,6 +24,23 @@ Enter a PDB ID *on the glasses*, download its experimental coordinates directly 
 - GitHub Pages hosts the static app, while GitHub Actions packages the molecular viewer locally. The glasses still need internet access to RCSB, but **do not need to pair with a phone browser**.
 - No app backend, cloud model storage, tracking or account is implemented. A phone may supply internet tethering to the glasses if required by the platform.
 
+## App icon and registration stability
+
+The existing molecular icon is provided as SVG source and automatically rasterized to **PNG 64×64, 192×192 and 512×512** during GitHub Pages deployment. The site advertises the PNG favicon, app manifest icons, name and stable canonical HTTPS URL so browsers and Meta can retrieve a compatible icon. The launcher icon ultimately shown is controlled by Meta AI and glasses firmware, and may be cached or replaced by a generic icon.
+
+**Keep the installed web-app URL exactly:**
+https://deepanshusharma-bnb.github.io/View-Protein/
+
+Do not install test URLs, branch previews, links with query parameters, or URLs that change across deployments. The GitHub Pages address is stable unless the GitHub username, repository name or Pages configuration changes.
+
+**App disappearance is controlled by Meta, not the web app.** Once registered, the installed-app list belongs to the Meta AI app/glasses; JavaScript in this web app cannot pin itself, re-register itself or prevent Meta from removing a registration. Manifest metadata and a permanent URL help make the app recognizable, but are not a guaranteed fix for developer-preview synchronization issues.
+
+If the app disappears from both Meta AI and the glasses:
+1. Verify Meta AI and the glasses firmware are current and **Developer Mode remains enabled**.
+2. In Meta AI, open your connected Display glasses, go to **App connections → Web apps**, and re-add the exact HTTPS URL above. Check the app name and icon.
+3. If it disappears again even while Meta AI remains open, capture the Meta AI app version, glasses firmware, approximate disappearance time and whether other custom web apps vanish. Report this to Meta as a registration/persistence bug; it cannot be repaired by web-page code.
+4. Keep the URL bookmarked on your phone so re-adding it is straightforward. Avoid clearing Meta AI app data or resetting the glasses unless directed by support, as that may delete stored settings.
+
 ## Scientific and technical limitations
 
 The viewer uses deposited coordinate models, not automatically reconstructed biological assemblies. It limits downloads to approximately **7 MB** to avoid overwhelming the glasses' GPU. Very large complexes, membrane proteins, or experimental structures that lack coordinates may be unsupported. WebGL support, RCSB access, on-glasses text composition, and wrist tracking still require physical-device testing.

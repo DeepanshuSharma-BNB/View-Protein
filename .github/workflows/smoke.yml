@@ -1,0 +1,37 @@
+name: Verify Live PDB Viewer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tests/browser-smoke.mjs'
+      - '.github/workflows/smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install browser automation
+        run: |
+          npm install --no-save --ignore-scripts --no-audit --no-fund puppeteer-core@24.25.0
+          which google-chrome
+      - name: Load RCSB structure in headless Chrome
+        run: node tests/browser-smoke.mjs
+      - name: Upload viewer screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: View-Protein-Browser-Check
+          path: view-protein-smoke.png
+          if-no-files-found: ignore

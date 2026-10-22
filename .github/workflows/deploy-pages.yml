@@ -35,16 +35,23 @@ jobs:
           npm test
           grep -q 'type="module" src="app.js"' index.html
           grep -q "emg-wrist" app.js
+          node --check scripts/generate-icons.mjs
+          grep -q 'icon-64.png' index.html
+          grep -q 'icon-192.png' manifest.webmanifest
 
       - name: Bundle molecular viewer locally
         run: |
-          npm install --no-save --ignore-scripts --no-audit --no-fund 3dmol@2.5.5
+          npm install --no-save --ignore-scripts --no-audit --no-fund 3dmol@2.5.5 sharp@0.34.4
           mkdir -p site/vendor
           LIB="node_modules/3dmol/build/3Dmol-min.js"
           if [ ! -s "$LIB" ]; then LIB="node_modules/3dmol/build/3Dmol-min.min.js"; fi
           test -s "$LIB"
           cp "$LIB" site/vendor/3Dmol.min.js
           cp index.html style.css app.js pdb.js motion.js manifest.webmanifest icon.svg site/
+          node scripts/generate-icons.mjs site
+          test -s site/icon-64.png
+          test -s site/icon-192.png
+          test -s site/icon-512.png
           touch site/.nojekyll
           test -s site/index.html
           test -s site/vendor/3Dmol.min.js

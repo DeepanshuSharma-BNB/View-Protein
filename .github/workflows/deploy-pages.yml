@@ -1,0 +1,62 @@
+name: Publish View Protein
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: view-protein-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Verify app and quaternion math
+        run: |
+          npm run check
+          npm test
+          grep -q 'type="module" src="app.js"' index.html
+          grep -q "emg-wrist" app.js
+
+      - name: Bundle molecular viewer locally
+        run: |
+          npm install --no-save --ignore-scripts --no-audit --no-fund 3dmol@2.5.5
+          mkdir -p site/vendor
+          LIB="node_modules/3dmol/build/3Dmol-min.min.js"
+          if [ ! -s "$LIB" ]; then LIB="node_modules/3dmol/build/3Dmol-min.js"; fi
+          test -s "$LIB"
+          cp "$LIB" site/vendor/3Dmol.min.js
+          cp index.html style.css app.js pdb.js motion.js manifest.webmanifest icon.svg site/
+          touch site/.nojekyll
+          test -s site/index.html
+          test -s site/vendor/3Dmol.min.js
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4

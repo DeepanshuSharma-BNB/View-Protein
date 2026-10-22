@@ -1,4 +1,5 @@
 {
+  "id": "./",
   "name": "View Protein · Molecular Explorer",
   "short_name": "View Protein",
   "start_url": "./",
@@ -7,14 +8,8 @@
   "orientation": "any",
   "background_color": "#020711",
   "theme_color": "#020711",
-  "description": "3D molecular viewer for Meta Ray-Ban Display, controlled with Neural Band wrist motion.",
+  "description": "Explore protein structures from RCSB PDB on Meta Ray-Ban Display with Neural Band wrist controls.",
   "icons": [
-    {
-      "src": "./icon-64.png",
-      "sizes": "64x64",
-      "type": "image/png",
-      "purpose": "any"
-    },
     {
       "src": "./icon-192.png",
       "sizes": "192x192",
@@ -26,7 +21,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
-  ],
-  "id": "./"
+  ]
 }

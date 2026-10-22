@@ -47,13 +47,14 @@ jobs:
           if [ ! -s "$LIB" ]; then LIB="node_modules/3dmol/build/3Dmol-min.min.js"; fi
           test -s "$LIB"
           cp "$LIB" site/vendor/3Dmol.min.js
-          cp index.html style.css app.js pdb.js motion.js manifest.webmanifest icon.svg site/
+          cp index.html install.html style.css app.js pdb.js motion.js manifest.webmanifest icon.svg site/
           node scripts/generate-icons.mjs site
           test -s site/icon-64.png
           test -s site/icon-192.png
           test -s site/icon-512.png
           touch site/.nojekyll
           test -s site/index.html
+          test -s site/install.html
           test -s site/vendor/3Dmol.min.js
 
       - name: Configure Pages
